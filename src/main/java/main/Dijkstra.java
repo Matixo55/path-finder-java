@@ -1,4 +1,4 @@
-package main.java;
+package main;
 
 public class Dijkstra {
     private static Utils utils = new Utils();
