@@ -1,16 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="main.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<HBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.GuiController">
+   <children>
+      <Canvas height="500.0" width="400.0" />
+      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="200.0" spacing="20.0">
+          <padding>
+              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+          </padding>
+         <Label text="Size" />
+         <HBox alignment="CENTER" prefHeight="28.0" prefWidth="160.0">
+            <children>
+               <Label prefHeight="17.0" prefWidth="80.0" text="Width" />
+               <TextField fx:id="width" prefHeight="25.0" prefWidth="82.0" />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="26.0" prefWidth="160.0">
+            <children>
+               <Label prefHeight="17.0" prefWidth="80.0" text="Height" />
+               <TextField fx:id="height" prefHeight="25.0" prefWidth="80.0" />
+            </children>
+         </HBox>
+         <Label text="Split graph" />
+         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="160.0">
+            <children>
+               <Label prefHeight="17.0" prefWidth="80.0" text="Parts" />
+               <TextField fx:id="parts" prefHeight="25.0" prefWidth="80.0" />
+            </children>
+         </HBox>
+         <Button mnemonicParsing="false" onAction="#onGenerateButtonClick" text="Generate" />
+         <Line endX="200.0" startX="-200.0" />
+         <Button mnemonicParsing="false" onAction="#onClearButtonClick" text="Clear" />
+         <Line endX="200.0" startX="-200.0" />
+         <HBox prefHeight="20.0" prefWidth="200.0">
+            <children>
+               <Button mnemonicParsing="false" onAction="#onOpenButtonClick" prefHeight="25.0" prefWidth="130.0" text="Open Graph" />
+               <TextField prefHeight="25.0" prefWidth="320.0" fx:id="gOpen"/>
+            </children></HBox>
+         <Line endX="200.0" startX="-200.0" />
+         <HBox prefHeight="20.0" prefWidth="200.0">
+            <children>
+               <Button mnemonicParsing="false" onAction="#onSaveButtonClick" prefWidth="130.0" text="Save Graph" />
+               <TextField prefHeight="25.0" prefWidth="326.0" fx:id="gSave"/>
+            </children>
+         </HBox>
+         <Line endX="200.0" startX="-200.0" />
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+          <Label fx:id="welcomeText" />
+         <Line endX="200.0" startX="-200.0" />
+         <Label text="Total weight" />
+      </VBox>
+   </children>
+</HBox>
