@@ -35,6 +35,10 @@ public class GuiController {
     @FXML
     private TextField gSave;
 
+    Main solver = new Main();
+    Bfs bfs = new Bfs();
+    Dijkstra dijkstra = new Dijkstra();
+    Geometric_division gd = new Geometric_division();
     @FXML
     protected void onGenerateButtonClick() {
         String gWidth = width.getText();
@@ -47,6 +51,7 @@ public class GuiController {
             if(!checkInitialConditions(Width, Height, Parts)){
                 welcomeText.setText("Generuję graf");
                 isGenerated = true;
+                solver.generateGraph(Height, Width, Parts);
             } else {
                 welcomeText.setText("Podano bledne dane!");
             }
@@ -55,20 +60,35 @@ public class GuiController {
         }
     }
     @FXML
+    protected void onSolveClick(){
+        //solver.solveGraph(start, target);
+        welcomeText.setText("Solved");
+    }
+    @FXML
     protected void onClearButtonClick() {
         welcomeText.setText("Wyczyszczono");
     }
     @FXML
     protected void onOpenButtonClick() {
-        isGenerated = true;
-        welcomeText.setText("Otwarto graf");
+        String openPath = gOpen.getText();
+        /*if (solver.readFromFile(openPath)==0){
+            isGenerated = true;
+            welcomeText.setText("Otwarto graf");
+        } else {
+            welcomeText.setText("Wystapil blad, podaj poprawna sciezke do pliku");
+        }*/
     }
     @FXML
     protected void onSaveButtonClick() {
         if(!isGenerated){
             welcomeText.setText("Najpierw wygeneruj graf");
         } else {
-            welcomeText.setText("Zapisany");
+            String savePath = gSave.getText();
+            /*if (solver.saveToFile(savePath)==0){
+                welcomeText.setText("Zapisany");
+            } else{
+                welcomeText.setText("Wystapil blad, podaj poprawna sciezke do pliku");
+            }*/
         }
     }
 
