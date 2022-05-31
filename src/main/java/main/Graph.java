@@ -1,9 +1,7 @@
 package main;
 
 import javafx.util.Pair;
-import ui.Edge;
 import ui.EdgeController;
-import ui.Vertex;
 import ui.VertexController;
 
 import java.io.BufferedReader;
@@ -23,19 +21,9 @@ public class Graph {
     public double[][] edges;
     public int start_index;
     public int target_index;
-    public ArrayList<VertexController> ui_vertices;
-    public HashMap<Pair<Integer, Integer>, EdgeController> ui_edges;
+
 
     private static Utils utils = new Utils();
-
-//    public Graph(int height, int width, int start_index, int target_index) {
-//        this.height = height;
-//        this.width = width;
-//        this.edges = new double[height * width][height * width];
-//        this.start_index = start_index;
-//        this.target_index = target_index;
-//        fill_graph_edge_weights();
-//    }
 
     private void fill_graph_edge_weights() {
         edges = new double[height * width][height * width];
@@ -59,7 +47,6 @@ public class Graph {
         Random random = new Random();
 
         fill_graph_edge_weights();
-        initialize_ui_elements();
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -67,25 +54,21 @@ public class Graph {
                     weight = random.nextDouble();
                     edges[index][index - width] = weight;
                     edges[index - width][index] = weight;
-                    ui_edges.put(new Pair<>(index, index-width), new EdgeController(new Edge(index, index - width, weight)));
                 }
                 if (y != (height - 1)) {
                     weight = random.nextDouble();
                     edges[index][index + width] = weight;
                     edges[index + width][index] = weight;
-                    ui_edges.put(new Pair<>(index, index+width), new EdgeController(new Edge(index, index + width, weight)));
                 }
                 if (x != 0) {
                     weight = random.nextDouble();
                     edges[index][index - 1] = weight;
                     edges[index - 1][index] = weight;
-                    ui_edges.put(new Pair<>(index, index-1), new EdgeController(new Edge(index, index - 1, weight)));
                 }
                 if (x != (width - 1)) {
                     weight = random.nextDouble();
                     edges[index][index + 1] = weight;
                     edges[index + 1][index] = weight;
-                    ui_edges.put(new Pair<>(index, index+1), new EdgeController(new Edge(index, index + 1, weight)));
                 }
 
                 index++;
@@ -145,15 +128,6 @@ public class Graph {
         fill_graph_edge_weights();
     }
 
-    private void initialize_ui_elements(){
-        ui_vertices = new ArrayList<>(height * width);
-        for (int i = 0; i < height * width; i++) {
-            ui_vertices.add(new VertexController(new Vertex(i)));
-        }
-
-        ui_edges = new HashMap<Pair<Integer, Integer>, EdgeController>(height * width);
-    }
-
     public void read_from_file(String file_path) {
         int index = 0;
 
@@ -162,7 +136,6 @@ public class Graph {
             String[] data;
 
             read_graph_dimensions(line);
-            initialize_ui_elements();
 
             while ((line = br.readLine()) != null) {
                 data = line.split("\t");
@@ -183,7 +156,6 @@ public class Graph {
 
                     edges[index][connected_vertex_index] = weight;
                     edges[connected_vertex_index][index] = weight;
-                    ui_edges.put(new Pair<>(index, connected_vertex_index), new EdgeController(new Edge(index, connected_vertex_index, weight)));
                 }
                 index++;
             }
@@ -193,5 +165,12 @@ public class Graph {
         } catch (Exception e) {
             utils.raise_error(-1);
         }
+    }
+
+    public int get_vertices_number() {
+        return height * width;
+    }
+    public double get_edge_weight(int vertex_index_1, int vertex_index_2) {
+        return edges[vertex_index_1][vertex_index_2];
     }
 }

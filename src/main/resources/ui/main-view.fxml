@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.GridPane?>
 
 
-<HBox prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.GuiController">
+<HBox prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GuiController">
    <children>
-      <Pane fx:id="graph_pane" style="-fx-border-color: black;">
+      <Pane fx:id="graph_pane" style="-fx-border-color: black;" prefHeight="Infinity" prefWidth="600">
             <fx:include fx:id="graph" source="graph.fxml" />
         </Pane>
       <Canvas height="500.0" width="400.0" />
