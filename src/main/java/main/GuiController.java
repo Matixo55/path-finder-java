@@ -35,7 +35,6 @@ public class GuiController {
     @FXML
     private TextField gSave;
 
-    Main solver = new Main();
     Bfs bfs = new Bfs();
     Dijkstra dijkstra = new Dijkstra();
     Geometric_division gd = new Geometric_division();
@@ -51,7 +50,7 @@ public class GuiController {
             if(!checkInitialConditions(Width, Height, Parts)){
                 welcomeText.setText("Generuję graf");
                 isGenerated = true;
-                solver.generateGraph(Height, Width, Parts);
+//                graph_controller.generateGraph(Height, Width, Parts);
             } else {
                 welcomeText.setText("Podano bledne dane!");
             }

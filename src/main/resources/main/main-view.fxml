@@ -5,9 +5,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.GridPane?>
+
 
 <HBox prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.GuiController">
    <children>
+      <Pane fx:id="graph_pane" style="-fx-border-color: black;">
+            <fx:include fx:id="graph" source="graph.fxml" />
+        </Pane>
       <Canvas height="500.0" width="400.0" />
       <Canvas height="200.0" width="200.0" />
       <VBox alignment="CENTER" maxWidth="350.0" minWidth="300.0" prefHeight="700.0" prefWidth="336.0" spacing="20.0">

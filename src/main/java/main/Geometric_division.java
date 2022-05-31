@@ -283,7 +283,7 @@ public class Geometric_division {
         }
     }
 
-    void divide_graph(Graph graph, int n) {
+    public void divide_graph(Graph graph, int n) {
         int start, attempts, range, is_line, max_attempts;
         int resign = 0;
 
