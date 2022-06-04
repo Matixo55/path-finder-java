@@ -2,6 +2,7 @@ package ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -40,7 +41,7 @@ public class GuiController {
     @FXML
     private TextField gSave;
     @FXML
-    private Pane graph_pane;
+    private ScrollPane graph_pane;
     @FXML
     private GraphController graph_controller;
 

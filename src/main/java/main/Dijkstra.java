@@ -20,7 +20,7 @@ public class Dijkstra {
         return index_of_vertex_with_minimal_distance;
     }
 
-    private Graph run_dijkstra_algorithm(Graph graph, int[] visited_vertexes, double[] distances, int[] previous_vertexes) {
+    private int[] run_dijkstra_algorithm(Graph graph, int[] visited_vertexes, double[] distances, int[] previous_vertexes) {
         int index, x, i;
         for (i = 0; i < graph.height * graph.width - 1; i++) {
             index = get_index_of_vertex_with_minimal_distance(graph, distances, visited_vertexes);
@@ -35,10 +35,10 @@ public class Dijkstra {
                 }
             }
         }
-        return graph;
+        return previous_vertexes;
     }
 
-    public void find_path_with_dijkstra_algorithm(Graph graph) {
+    public int[] find_path_with_dijkstra_algorithm(Graph graph) {
         int[] visited_vertexes = new int[graph.width * graph.height];
         int[] previous_vertexes = new int[graph.width * graph.height];
         double[] distances = new double[graph.width * graph.height];
@@ -50,7 +50,7 @@ public class Dijkstra {
         }
         distances[graph.start_index] = 0;
 
-        run_dijkstra_algorithm(graph, visited_vertexes, distances, previous_vertexes);
+        return run_dijkstra_algorithm(graph, visited_vertexes, distances, previous_vertexes);
     }
 
 }

@@ -19,8 +19,8 @@ public class Graph {
     public int height;
     public int width;
     public double[][] edges;
-    public int start_index;
-    public int target_index;
+    public int start_index = -1;
+    public int target_index = -1;
 
 
     private static Utils utils = new Utils();

@@ -22,8 +22,7 @@ public class MainApplication extends Application {
 
         stage.setTitle("Path finder");
         stage.setScene(scene);
-        stage.setMinHeight(700);
-        stage.setMinWidth(900);
+        stage.setResizable(false);
         stage.show();
     }
 

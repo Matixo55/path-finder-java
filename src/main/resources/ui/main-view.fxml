@@ -10,14 +10,19 @@
 <?import javafx.scene.layout.GridPane?>
 
 
-<HBox prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GuiController">
+<GridPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GuiController">
+   <columnConstraints>
+      <ColumnConstraints minWidth="70.0" percentWidth="80.0"/>
+      <ColumnConstraints minWidth="30.0" percentWidth="20.0"/>
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="100.0" percentHeight="100.0"/>
+   </rowConstraints>
    <children>
-      <Pane fx:id="graph_pane" style="-fx-border-color: black;" prefHeight="Infinity" prefWidth="600">
+      <ScrollPane fx:id="graph_pane" style="-fx-border-color: black; -fx-background: LIGHTGRAY;" GridPane.rowIndex="0" GridPane.columnIndex="0">
             <fx:include fx:id="graph" source="graph.fxml" />
-        </Pane>
-      <Canvas height="500.0" width="400.0" />
-      <Canvas height="200.0" width="200.0" />
-      <VBox alignment="CENTER" maxWidth="350.0" minWidth="300.0" prefHeight="700.0" prefWidth="336.0" spacing="20.0">
+      </ScrollPane>
+      <VBox alignment="CENTER" spacing="20.0"  GridPane.rowIndex="0" GridPane.columnIndex="1">
           <padding>
               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
           </padding>
@@ -85,4 +90,4 @@
          <Label fx:id="total_weight" />
       </VBox>
    </children>
-</HBox>
+</GridPane>

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.paint.Color;
 import javafx.util.Pair;
 import main.*;
 
@@ -25,18 +26,39 @@ public class GraphController {
 
     @FXML
     private void initialize() {
-        gc = canvas.getGraphicsContext2D();
-        graph.start_index = 0;
-        graph.target_index = 1;
+        this.gc = canvas.getGraphicsContext2D();
 //        graph.read_from_file("graph.txt");
-        graph.generate_graph(50, 50);
+        graph.generate_graph(10, 10);
         fill_edges();
         fill_vertices();
         drawGraph();
+        canvas.setOnMouseClicked(mouseEvent -> {
+            int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
+            int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
+            int index = y * graph.width + x;
+            VertexController vertex = vertices.get(index);
+            if (graph.start_index == -1 && !vertex.isSelected()) {
+                this.graph.start_index = index;
+                vertices.get(index).select();
+            } else if (graph.target_index == -1 && !vertex.isSelected()) {
+                this.graph.target_index = index;
+                vertices.get(index).select();
+                bfs.run_bfs(graph, 0, 1);
+                int[] previous_vertexes = dijkstra.find_path_with_dijkstra_algorithm(graph);
+                int vertex_index = graph.target_index;
+                while (vertex_index != graph.start_index) {
+                    System.out.println(vertex_index);
+                    int previous_vertex_index = previous_vertexes[vertex_index];
+                    EdgeController edge = edges.get(new Pair<Integer, Integer>(vertex_index, previous_vertex_index));
+                    if (edge == null) {
+                        edge = edges.get(new Pair<Integer, Integer>(previous_vertex_index, vertex_index));
+                    }
+                    edge.select();
+                    vertices.get(vertex_index).select();
+                    vertex_index = previous_vertex_index;
+            }}
+        });
 
-        bfs.run_bfs(graph, 0, 1);
-
-        dijkstra.find_path_with_dijkstra_algorithm(graph);
     }
     public void generateGraph(int h, int w, int n){
         graph.width = w;
@@ -56,11 +78,10 @@ public class GraphController {
         for (int i = 0; i < graph.get_vertices_number(); i++) {
             for (int j = 0; j < graph.get_vertices_number(); j++) {
                 if (i != j && graph.get_edge_weight(i, j) != utils.NO_CONNECTION && edges.get(new Pair<Integer, Integer>(j, i)) == null) {
-                    edges.put(new Pair<>(i, j), new EdgeController(i, j, graph.edges[i][j]));
+                    this.edges.put(new Pair<>(i, j), new EdgeController(i, j, graph.edges[i][j]));
                 }
             }
         }
-        System.out.println(edges.size());
     }
 
     public void readFromFile(String file_path){
@@ -79,15 +100,27 @@ public class GraphController {
         double x = canvas.getWidth() / graph.width;
         double y = canvas.getHeight() / graph.height;
 
-        double side = Math.min(x, y) / 2;
-
+        double side = Math.min(x, y)*2/3;
+        System.out.println(side);
+        if (side < 20){
+            canvas.setWidth(graph.width * 30);
+            canvas.setHeight(graph.height * 30);
+            drawGraph();
+            return;
+        }
+        if (side > 100){
+            canvas.setWidth(graph.width * 100);
+            canvas.setHeight(graph.height * 100);
+            drawGraph();
+            return;
+        }
+        for (EdgeController edgeController : edges.values()){
+            edgeController.draw(gc, x, y, graph.width, graph.height, side);
+        }
         for (VertexController vertexController : vertices){
             if (vertexController != null){
                 vertexController.draw(gc, x, y, graph.width, graph.height, side);
             }
-        }
-        for (EdgeController edgeController : edges.values()){
-            edgeController.draw(gc, x, y, graph.width, graph.height, side);
         }
     }
 
