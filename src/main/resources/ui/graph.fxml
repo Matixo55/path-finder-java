@@ -2,4 +2,5 @@
 
 
 <?import javafx.scene.canvas.Canvas?>
-<Canvas fx:id="canvas"  xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GraphController" />
+<Canvas fx:id="canvas" height="600" width="600" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="ui.GraphController"/>

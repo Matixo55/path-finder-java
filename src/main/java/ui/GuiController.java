@@ -42,8 +42,6 @@ public class GuiController {
     private TextField gSave;
     @FXML
     private ScrollPane graph_pane;
-    @FXML
-    private GraphController graph_controller;
 
     Bfs bfs = new Bfs();
     Dijkstra dijkstra = new Dijkstra();

@@ -31,4 +31,8 @@ public class Utils {
         System.out.println(error_message);
         System.exit(code);
     }
+
+    public String get_edge_index(int vertex_index, int connected_vertex_index) {
+        return String.format("%d-%d", vertex_index, connected_vertex_index);
+    }
 }

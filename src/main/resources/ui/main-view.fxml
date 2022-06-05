@@ -19,7 +19,7 @@
       <RowConstraints minHeight="100.0" percentHeight="100.0"/>
    </rowConstraints>
    <children>
-      <ScrollPane fx:id="graph_pane" style="-fx-border-color: black; -fx-background: LIGHTGRAY;" GridPane.rowIndex="0" GridPane.columnIndex="0">
+      <ScrollPane fx:id="graph_pane" style="-fx-border-color: black; -fx-background: BLACK;" GridPane.rowIndex="0" GridPane.columnIndex="0">
             <fx:include fx:id="graph" source="graph.fxml" />
       </ScrollPane>
       <VBox alignment="CENTER" spacing="20.0"  GridPane.rowIndex="0" GridPane.columnIndex="1">
