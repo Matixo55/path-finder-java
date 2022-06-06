@@ -5,24 +5,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.GridPane?>
 
-
-<GridPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GuiController">
+<GridPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GuiController">
    <columnConstraints>
-      <ColumnConstraints minWidth="70.0" percentWidth="80.0"/>
-      <ColumnConstraints minWidth="30.0" percentWidth="20.0"/>
+      <ColumnConstraints minWidth="70.0" percentWidth="70.0" />
+      <ColumnConstraints minWidth="30.0" percentWidth="30.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints minHeight="100.0" percentHeight="100.0"/>
+      <RowConstraints minHeight="100.0" percentHeight="100.0" />
    </rowConstraints>
    <children>
-      <ScrollPane fx:id="graph_pane" style="-fx-border-color: black; -fx-background: BLACK;" GridPane.rowIndex="0" GridPane.columnIndex="0">
-            <fx:include fx:id="graph" source="graph.fxml" />
+      <ScrollPane fx:id="graph_pane" prefHeight="700.0" prefWidth="770.0" style="-fx-border-color: black; -fx-background: BLACK;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+         <fx:include fx:id="graph" source="graph.fxml" />
       </ScrollPane>
-      <VBox alignment="CENTER" spacing="20.0"  GridPane.rowIndex="0" GridPane.columnIndex="1">
+      <VBox alignment="CENTER" prefHeight="700.0" prefWidth="408.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
           <padding>
               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
           </padding>
@@ -49,17 +45,13 @@
          <Line endX="200.0" startX="-100.0" />
          <HBox maxWidth="300.0" minWidth="250.0" prefHeight="30.0" prefWidth="250.0">
             <children>
-               <Button mnemonicParsing="false" onAction="#onGenerateButtonClick" prefWidth="100.0" text="Generate">
+               <Button mnemonicParsing="false" onAction="#onGenerateButtonClick" prefHeight="25.0" prefWidth="120.0" text="Generate">
                   <HBox.margin>
                      <Insets right="20.0" />
                   </HBox.margin></Button>
-               <Button mnemonicParsing="false" onAction="#onClearButtonClick" prefWidth="100.0" text="Clear">
+               <Button mnemonicParsing="false" onAction="#onClearButtonClick" prefHeight="25.0" prefWidth="120.0" text="Clear">
                   <HBox.margin>
                      <Insets right="20.0" />
-                  </HBox.margin></Button>
-               <Button mnemonicParsing="false" onAction="#onSolveClick" prefWidth="100.0" text="Solve">
-                  <HBox.margin>
-                     <Insets />
                   </HBox.margin></Button>
             </children>
          </HBox>

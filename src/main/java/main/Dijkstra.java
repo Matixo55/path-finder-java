@@ -2,6 +2,7 @@ package main;
 
 public class Dijkstra {
     private static Utils utils = new Utils();
+
     private int get_index_of_vertex_with_minimal_distance(Graph graph, double[] distances, int[] visited_vertices) {
         int index_of_vertex_with_minimal_distance = Integer.MAX_VALUE;
 
@@ -34,6 +35,7 @@ public class Dijkstra {
                 }
             }
         }
+        graph.total_weight = distances[graph.target_index];
         return previous_vertexes;
     }
 

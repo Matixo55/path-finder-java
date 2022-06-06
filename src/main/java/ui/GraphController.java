@@ -26,7 +26,7 @@ public class GraphController {
     @FXML
     private void initialize() {
         initialize_graph();
-        generateGraph(50, 50, 20);
+        generateGraph(20, 20, 1);
 
         canvas.setOnMouseClicked(mouseEvent -> {
             int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
@@ -79,6 +79,7 @@ public class GraphController {
     public void clear_graph() {
         graph.start_index = -1;
         graph.target_index = -1;
+        graph.total_weight = 0;
         for (EdgeController edge : edges.values()) {
             edge.draw_deselected();
         }
@@ -88,13 +89,13 @@ public class GraphController {
     }
 
     public void generateGraph(int h, int w, int n) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graph.width = w;
         graph.height = h;
         graph.generate_graph(w, h);
         //        graph.read_from_file("graph.txt");
         if (bfs.run_bfs(graph, 0, w * h - 1) != 2)
             gd.divide_graph(graph, n);
-        fill_edges();
         drawGraph();
     }
 
@@ -105,13 +106,10 @@ public class GraphController {
         gc = canvas.getGraphicsContext2D();
     }
 
-
-    public void fill_edges() {
-
-    }
-
     public void readFromFile(String file_path) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graph.read_from_file(file_path);
+        drawGraph();
     }
 
     public void saveToFile(String file_path) {
@@ -184,8 +182,7 @@ public class GraphController {
         }
     }
 
-    public void setGraph(Graph graph) {
-        this.graph = graph;
+    public double get_total_weight() {
+        return graph.total_weight;
     }
-
 }
