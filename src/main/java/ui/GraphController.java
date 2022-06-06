@@ -26,7 +26,7 @@ public class GraphController {
     @FXML
     private void initialize() {
         initialize_graph();
-        generateGraph(20, 20, 1);
+        generateGraph(120, 120, 1);
 
         canvas.setOnMouseClicked(mouseEvent -> {
             int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
@@ -107,9 +107,7 @@ public class GraphController {
     }
 
     public void readFromFile(String file_path) {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graph.read_from_file(file_path);
-        drawGraph();
     }
 
     public void saveToFile(String file_path) {
