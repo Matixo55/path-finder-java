@@ -25,9 +25,6 @@ public class GraphController {
 
     @FXML
     private void initialize() {
-        initialize_graph();
-        generateGraph(120, 120, 1);
-
         canvas.setOnMouseClicked(mouseEvent -> {
             int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
             int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
@@ -51,8 +48,6 @@ public class GraphController {
             graph.target_index = index;
             vertex.draw_selected();
             solveGraph();
-        } else {
-            clear_graph();
         }
     }
 
@@ -90,10 +85,11 @@ public class GraphController {
 
     public void generateGraph(int h, int w, int n) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        canvas.setWidth(600);
+        canvas.setHeight(600);
         graph.width = w;
         graph.height = h;
         graph.generate_graph(w, h);
-        //        graph.read_from_file("graph.txt");
         if (bfs.run_bfs(graph, 0, w * h - 1) != 2)
             gd.divide_graph(graph, n);
         drawGraph();
