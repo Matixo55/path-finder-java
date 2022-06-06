@@ -21,6 +21,7 @@ public class Graph {
     public double[][] edges;
     public int start_index = -1;
     public int target_index = -1;
+    public double total_weight = 0;
 
 
     private static Utils utils = new Utils();
@@ -170,6 +171,7 @@ public class Graph {
     public int get_vertices_number() {
         return height * width;
     }
+
     public double get_edge_weight(int vertex_index_1, int vertex_index_2) {
         return edges[vertex_index_1][vertex_index_2];
     }
