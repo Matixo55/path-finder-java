@@ -107,7 +107,9 @@ public class GraphController {
     }
 
     public void readFromFile(String file_path) {
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         graph.read_from_file(file_path);
+        drawGraph();
     }
 
     public void saveToFile(String file_path) {
