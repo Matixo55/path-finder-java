@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <GridPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GuiController">
    <columnConstraints>
@@ -21,24 +22,48 @@
           <padding>
               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
           </padding>
-         <Label text="Size" />
+         <Label text="Size">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
          <HBox alignment="CENTER" prefHeight="28.0" prefWidth="160.0">
             <children>
-               <Label prefHeight="17.0" prefWidth="80.0" text="Width" />
-               <TextField fx:id="width" prefHeight="25.0" prefWidth="82.0" />
+               <Label prefHeight="17.0" prefWidth="80.0" text="Width">
+                  <font>
+                     <Font size="18.0" />
+                  </font></Label>
+               <TextField fx:id="width" prefHeight="25.0" prefWidth="82.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
             </children>
          </HBox>
          <HBox alignment="CENTER" prefHeight="26.0" prefWidth="160.0">
             <children>
-               <Label prefHeight="17.0" prefWidth="80.0" text="Height" />
-               <TextField fx:id="height" prefHeight="25.0" prefWidth="80.0" />
+               <Label prefHeight="17.0" prefWidth="80.0" text="Height">
+                  <font>
+                     <Font size="18.0" />
+                  </font></Label>
+               <TextField fx:id="height" prefHeight="25.0" prefWidth="80.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
             </children>
          </HBox>
-         <Label text="Split graph" />
+         <Label text="Split graph">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
          <HBox alignment="CENTER" prefHeight="32.0" prefWidth="160.0">
             <children>
-               <Label prefHeight="17.0" prefWidth="80.0" text="Parts" />
-               <TextField fx:id="parts" prefHeight="25.0" prefWidth="80.0" />
+               <Label prefHeight="17.0" prefWidth="80.0" text="Parts">
+                  <font>
+                     <Font size="18.0" />
+                  </font></Label>
+               <TextField fx:id="parts" prefHeight="25.0" prefWidth="80.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
             </children>
          </HBox>
          <Line endX="200.0" startX="-100.0" />
@@ -47,11 +72,17 @@
                <Button mnemonicParsing="false" onAction="#onGenerateButtonClick" prefHeight="25.0" prefWidth="120.0" text="Generate">
                   <HBox.margin>
                      <Insets right="20.0" />
-                  </HBox.margin></Button>
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font></Button>
                <Button mnemonicParsing="false" onAction="#onClearButtonClick" prefHeight="25.0" prefWidth="120.0" text="Clear">
                   <HBox.margin>
                      <Insets right="20.0" />
-                  </HBox.margin></Button>
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font></Button>
             </children>
          </HBox>
          <Line endX="200.0" startX="-100.0" />
@@ -60,8 +91,14 @@
                <Button mnemonicParsing="false" onAction="#onOpenButtonClick" prefHeight="25.0" prefWidth="100.0" text="Open Graph">
                   <HBox.margin>
                      <Insets right="20.0" />
-                  </HBox.margin></Button>
-               <TextField fx:id="gOpen" prefHeight="25.0" prefWidth="150.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font></Button>
+               <TextField fx:id="gOpen" prefHeight="25.0" prefWidth="150.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
             </children></HBox>
          <Line endX="200.0" startX="-100.0" />
          <HBox maxWidth="320.0" prefHeight="20.0" prefWidth="200.0">
@@ -69,16 +106,31 @@
                <Button mnemonicParsing="false" onAction="#onSaveButtonClick" prefWidth="100.0" text="Save Graph">
                   <HBox.margin>
                      <Insets right="20.0" />
-                  </HBox.margin></Button>
-               <TextField fx:id="gSave" prefHeight="25.0" prefWidth="150.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="14.0" />
+                  </font></Button>
+               <TextField fx:id="gSave" prefHeight="25.0" prefWidth="150.0">
+                  <font>
+                     <Font size="14.0" />
+                  </font></TextField>
             </children>
          </HBox>
          <Line endX="200.0" startX="-100.0" />
 
-          <Label fx:id="welcomeText" />
+          <Label fx:id="welcomeText">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
          <Line endX="200.0" startX="-100.0" />
-         <Label text="Total weight" />
-         <Label fx:id="total_weight" />
+         <Label text="Total weight">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
+         <Label fx:id="total_weight">
+            <font>
+               <Font size="18.0" />
+            </font></Label>
       </VBox>
    </children>
 </GridPane>
