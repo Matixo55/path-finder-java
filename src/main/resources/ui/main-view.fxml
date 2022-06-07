@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
@@ -15,7 +14,7 @@
       <RowConstraints minHeight="100.0" percentHeight="100.0" />
    </rowConstraints>
    <children>
-      <ScrollPane fx:id="graph_pane" prefHeight="700.0" prefWidth="770.0" style="-fx-border-color: black; -fx-background: BLACK;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <ScrollPane fx:id="graph_pane" onMouseClicked="#initial" prefHeight="700.0" prefWidth="770.0" style="-fx-border-color: black; -fx-background: BLACK;" GridPane.columnIndex="0" GridPane.rowIndex="0">
          <fx:include fx:id="graph" source="graph.fxml" />
       </ScrollPane>
       <VBox alignment="CENTER" prefHeight="700.0" prefWidth="408.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="0">

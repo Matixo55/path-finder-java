@@ -54,6 +54,17 @@ public class GuiController {
 
     @FXML
     private GraphController graphController;
+
+    @FXML
+    private void initial(){
+       graphController.initialize_click();
+       if (graphController.issolved) {
+          String weight = Double.toString(graphController.get_total_weight());
+          total_weight.setText(weight);
+       }
+
+
+    }
     @FXML
     protected void onGenerateButtonClick(){
         String gWidth = width.getText();
@@ -66,10 +77,10 @@ public class GuiController {
             if(!checkInitialConditions(Width, Height, Parts)){
                 welcomeText.setText("Generuję graf");
                 isGenerated = true;
+                total_weight.setText("0.0");
                 graphController.initialize_graph();
                 graphController.generateGraph(Height, Width, Parts);
-                String weight = Double.toString(graphController.get_total_weight());
-                total_weight.setText(weight);
+
             } else {
                 welcomeText.setText("Podano bledne dane!");
             }
@@ -81,20 +92,22 @@ public class GuiController {
     protected void onClearButtonClick() {
         welcomeText.setText("Wyczyszczono");
         graphController.clear_graph();
+        total_weight.setText("0.0");
     }
     @FXML
     protected void onOpenButtonClick() {
         String openPath = gOpen.getText();
-
-        isGenerated = true;
-        welcomeText.setText("Otwarto graf");
+        int isopened;
         graphController.initialize_graph();
-        graphController.readFromFile(openPath);
-        /*} else {
+        isopened = graphController.readFromFile(openPath);
+        if (isopened == 0) {
+            isGenerated = true;
+            welcomeText.setText("Otwarto graf");
+            total_weight.setText("0.0");
+        } else {
             welcomeText.setText("Wystapil blad, podaj poprawna sciezke do pliku");
-        }*/
-        String weight = Double.toString(graphController.get_total_weight());
-        total_weight.setText(weight);
+        }
+
     }
     @FXML
     protected void onSaveButtonClick() {
@@ -104,9 +117,6 @@ public class GuiController {
             String savePath = gSave.getText();
             graphController.saveToFile(savePath);
             welcomeText.setText("Zapisany");
-            /*
-                welcomeText.setText("Wystapil blad, podaj poprawna sciezke do pliku");
-            }*/
         }
     }
 

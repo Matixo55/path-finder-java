@@ -129,7 +129,7 @@ public class Graph {
         fill_graph_edge_weights();
     }
 
-    public void read_from_file(String file_path) {
+    public int read_from_file(String file_path) {
         int index = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
@@ -164,8 +164,10 @@ public class Graph {
         } catch (AssertionError | ArrayIndexOutOfBoundsException | NumberFormatException ex) {
             utils.raise_error(utils.GRAPH_DATA_INVALID);
         } catch (Exception e) {
-            utils.raise_error(-1);
+            //utils.raise_error(-1);
+            return 1;
         }
+        return 0;
     }
 
     public int get_vertices_number() {

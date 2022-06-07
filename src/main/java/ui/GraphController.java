@@ -22,9 +22,21 @@ public class GraphController {
     private Utils utils = new Utils();
     private ArrayList<VertexController> vertices;
     private HashMap<String, EdgeController> edges;
+    public boolean issolved = false;
 
     @FXML
     private void initialize() {
+        initialize_graph();
+        generateGraph(20, 20, 10);
+        canvas.setOnMouseClicked(mouseEvent -> {
+            int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
+            int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
+
+            try_selecting_vertex(x, y);
+        });
+    }
+
+    public void initialize_click(){
         canvas.setOnMouseClicked(mouseEvent -> {
             int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
             int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
@@ -48,6 +60,7 @@ public class GraphController {
             graph.target_index = index;
             vertex.draw_selected();
             solveGraph();
+            issolved = true;
         }
     }
 
@@ -75,6 +88,7 @@ public class GraphController {
         graph.start_index = -1;
         graph.target_index = -1;
         graph.total_weight = 0;
+        issolved = false;
         for (EdgeController edge : edges.values()) {
             edge.draw_deselected();
         }
@@ -102,10 +116,18 @@ public class GraphController {
         gc = canvas.getGraphicsContext2D();
     }
 
-    public void readFromFile(String file_path) {
+    public int readFromFile(String file_path) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        graph.read_from_file(file_path);
-        drawGraph();
+        canvas.setWidth(600);
+        canvas.setHeight(600);
+        int isread = graph.read_from_file(file_path);
+        if (isread == 0) {
+            drawGraph();
+            return 0;
+        }
+        else {
+            return 1;
+        }
     }
 
     public void saveToFile(String file_path) {
