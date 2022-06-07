@@ -21,21 +21,9 @@ public class GraphController {
     private Utils utils = new Utils();
     private ArrayList<VertexController> vertices;
     private HashMap<String, EdgeController> edges;
-    public boolean issolved = false;
 
     @FXML
     private void initialize() {
-        initialize_graph();
-        generate_graph(20, 20, 10);
-        canvas.setOnMouseClicked(mouseEvent -> {
-            int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
-            int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
-
-            try_selecting_vertex(x, y);
-        });
-    }
-
-    public void initialize_click() {
         canvas.setOnMouseClicked(mouseEvent -> {
             int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
             int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
@@ -59,11 +47,10 @@ public class GraphController {
             graph.target_index = index;
             vertex.draw_as_selected();
             find_path_between_selected_vertexes();
-            issolved = true;
         }
     }
 
-    public void find_path_between_selected_vertexes() {
+    private void find_path_between_selected_vertexes() {
         if (graph.start_index == -1 || graph.target_index == -1) {
             return;
         }
@@ -84,10 +71,8 @@ public class GraphController {
     }
 
     public void clear_selections_from_graph() {
-        graph.start_index = -1;
-        graph.target_index = -1;
-        graph.total_weight = 0;
-        issolved = false;
+        reset_or_initialize_graph();
+
         for (EdgeController edge : edges.values()) {
             edge.draw_as_deselected();
         }
@@ -97,9 +82,7 @@ public class GraphController {
     }
 
     public void generate_graph(int height, int width, int parts) {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        canvas.setWidth(600);
-        canvas.setHeight(600);
+        reset_or_initialize_graph();
         graph.width = width;
         graph.height = height;
         graph.generate_graph(width, height);
@@ -108,24 +91,25 @@ public class GraphController {
         draw_graph();
     }
 
-    public void initialize_graph() {
+    public void reset_or_initialize_graph() {
         graph = new Graph();
         vertices = new ArrayList<VertexController>();
         edges = new HashMap<String, EdgeController>();
         gc = canvas.getGraphicsContext2D();
-    }
 
-    public int read_graph_from_file(String file_path) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         canvas.setWidth(600);
         canvas.setHeight(600);
+    }
+
+    public int read_graph_from_file(String file_path) {
+        reset_or_initialize_graph();
+
         int isread = graph.read_graph_from_file(file_path);
         if (isread == 0) {
             draw_graph();
-            return 0;
-        } else {
-            return 1;
         }
+        return isread;
     }
 
     public void save_graph_to_file(String file_path) {
@@ -198,7 +182,14 @@ public class GraphController {
         }
     }
 
-    public double get_total_weight_of_found_path() {
-        return graph.total_weight;
+    public String get_string_with_total_weight_of_found_path() {
+        if (graph != null)
+            return Double.toString(graph.total_weight);
+
+        return "0.0";
+    }
+
+    public boolean is_graph_generated() {
+        return graph != null;
     }
 }

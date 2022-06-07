@@ -24,9 +24,8 @@ public class GuiController {
         return false;
     }
 
-    private boolean isGenerated = false;
     @FXML
-    private Label welcomeText;
+    private Label info_text;
     @FXML
     private Label total_weight;
     @FXML
@@ -45,15 +44,8 @@ public class GuiController {
     @FXML
     private GraphController graphController;
 
-    @FXML
-    private void initial() {
-        graphController.initialize_click();
-        if (graphController.issolved) {
-            String weight = Double.toString(graphController.get_total_weight_of_found_path());
-            total_weight.setText(weight);
-        }
-
-
+    public void update_total_weight() {
+        total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
     }
 
     @FXML
@@ -61,54 +53,52 @@ public class GuiController {
         String gWidth = width.getText();
         String gHeight = height.getText();
         String gParts = parts.getText();
+
         if (isNumeric(gWidth) && isNumeric(gHeight) && isNumeric(gParts)) {
             int Width = Integer.parseInt(gWidth);
             int Height = Integer.parseInt(gHeight);
             int Parts = Integer.parseInt(gParts);
             if (!checkInitialConditions(Width, Height, Parts)) {
-                welcomeText.setText("Generuję graf");
-                isGenerated = true;
-                total_weight.setText("0.0");
-                graphController.initialize_graph();
+                info_text.setText("Generuję graf");
                 graphController.generate_graph(Height, Width, Parts);
+                total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
             } else {
-                welcomeText.setText("Podano bledne dane!");
+                info_text.setText("Podano bledne dane!");
             }
         } else {
-            welcomeText.setText("Podano bledne dane!");
+            info_text.setText("Podano bledne dane!");
         }
     }
 
     @FXML
     protected void onClearButtonClick() {
-        welcomeText.setText("Wyczyszczono");
+        info_text.setText("Wyczyszczono");
         graphController.clear_selections_from_graph();
-        total_weight.setText("0.0");
+        update_total_weight();
     }
 
     @FXML
     protected void onOpenButtonClick() {
         String openPath = gOpen.getText();
-        int isopened;
-        graphController.initialize_graph();
-        isopened = graphController.read_graph_from_file(openPath);
+        graphController.reset_or_initialize_graph();
+
+        int isopened = graphController.read_graph_from_file(openPath);
         if (isopened == 0) {
-            isGenerated = true;
-            welcomeText.setText("Otwarto graf");
-            total_weight.setText("0.0");
+            info_text.setText("Otwarto graf");
+            update_total_weight();
         } else {
-            welcomeText.setText("Wystapil blad, podaj poprawna sciezke do pliku");
+            info_text.setText("Wystapil blad, podaj poprawna sciezke do pliku");
         }
     }
 
     @FXML
     protected void onSaveButtonClick() {
-        if (!isGenerated) {
-            welcomeText.setText("Najpierw wygeneruj graf");
+        if (!graphController.is_graph_generated()) {
+            info_text.setText("Najpierw wygeneruj graf");
         } else {
             String savePath = gSave.getText();
-            graphController.save_graph_to_file(savePath);
-            welcomeText.setText("Zapisany");
+            update_total_weight();
+            info_text.setText("Zapisany");
         }
     }
 
