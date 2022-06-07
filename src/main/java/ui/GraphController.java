@@ -105,18 +105,14 @@ public class GraphController {
     public int read_graph_from_file(String file_path) {
         reset_or_initialize_graph();
 
-        int isread = graph.read_graph_from_file(file_path);
-        if (isread == 0) {
-            draw_graph();
-        }
-        return isread;
+        return graph.read_graph_from_file(file_path);
     }
 
     public void save_graph_to_file(String file_path) {
         graph.save_graph_to_file(file_path);
     }
 
-    private void draw_graph() {
+    void draw_graph() {
         double x = canvas.getWidth() / graph.width;
         double y = canvas.getHeight() / graph.height;
 

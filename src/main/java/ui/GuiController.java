@@ -6,24 +6,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 
 public class GuiController {
-
-    private static boolean isNumeric(String str) {
-        try {
-            @SuppressWarnings("unused")
-            int x = Integer.parseInt(str);
-            return true; //String is an Integer
-        } catch (NumberFormatException e) {
-            return false; //String is not an Integer
-        }
-    }
-
-    private static boolean checkInitialConditions(int x, int y, int n) {
-        if (x * y > 10000 || x <= 0 || y <= 0 || n < 1 || n > (x * y) / 2) {
-            return true; // Warunki nie sa spelnione
-        }
-        return false;
-    }
-
     @FXML
     private Label info_text;
     @FXML
@@ -40,12 +22,15 @@ public class GuiController {
     private TextField gSave;
     @FXML
     private ScrollPane graph_pane;
-
     @FXML
     private GraphController graphController;
 
     public void update_total_weight() {
         total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
+    }
+
+    private static boolean are_parameters_valid(int x, int y, int n) {
+        return (x * y <= 10000 && x > 0 && y > 0 && n >= 1 && n <= (x * y) / 2);
     }
 
     @FXML
@@ -54,18 +39,18 @@ public class GuiController {
         String gHeight = height.getText();
         String gParts = parts.getText();
 
-        if (isNumeric(gWidth) && isNumeric(gHeight) && isNumeric(gParts)) {
+        try {
             int Width = Integer.parseInt(gWidth);
             int Height = Integer.parseInt(gHeight);
             int Parts = Integer.parseInt(gParts);
-            if (!checkInitialConditions(Width, Height, Parts)) {
-                info_text.setText("Generuję graf");
-                graphController.generate_graph(Height, Width, Parts);
-                total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
-            } else {
-                info_text.setText("Podano bledne dane!");
-            }
-        } else {
+
+            assert are_parameters_valid(Width, Height, Parts) == true;
+
+            info_text.setText("Generuję graf");
+            graphController.generate_graph(Height, Width, Parts);
+            total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
+
+        } catch (NumberFormatException | AssertionError e) {
             info_text.setText("Podano bledne dane!");
         }
     }
@@ -82,8 +67,8 @@ public class GuiController {
         String openPath = gOpen.getText();
         graphController.reset_or_initialize_graph();
 
-        int isopened = graphController.read_graph_from_file(openPath);
-        if (isopened == 0) {
+        if (graphController.read_graph_from_file(openPath) == 0) {
+            graphController.draw_graph();
             info_text.setText("Otwarto graf");
             update_total_weight();
         } else {
