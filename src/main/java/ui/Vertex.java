@@ -1,4 +1,4 @@
 package ui;
 
-public record Vertex(int index, double x, double y, double length) {
+public record Vertex(int index, double pos_x, double pos_y, double side_length) {
 }

@@ -1,17 +1,10 @@
 package main;
 
-import javafx.util.Pair;
-import ui.EdgeController;
-import ui.VertexController;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Random;
 
 
@@ -77,7 +70,7 @@ public class Graph {
         }
     }
 
-    public void save_to_file(String file_path) {
+    public void save_graph_to_file(String file_path) {
         PrintWriter writer = null;
 
         try {
@@ -129,7 +122,7 @@ public class Graph {
         fill_graph_edge_weights();
     }
 
-    public int read_from_file(String file_path) {
+    public int read_graph_from_file(String file_path) {
         int index = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
@@ -174,7 +167,7 @@ public class Graph {
         return height * width;
     }
 
-    public double get_edge_weight(int vertex_index_1, int vertex_index_2) {
-        return edges[vertex_index_1][vertex_index_2];
+    public double get_edge_weight(int first_vertex_index, int second_vertex_index) {
+        return edges[first_vertex_index][second_vertex_index];
     }
 }

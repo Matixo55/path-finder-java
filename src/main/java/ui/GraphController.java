@@ -3,7 +3,6 @@ package ui;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.util.Pair;
 import main.*;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class GraphController {
     @FXML
     private void initialize() {
         initialize_graph();
-        generateGraph(20, 20, 10);
+        generate_graph(20, 20, 10);
         canvas.setOnMouseClicked(mouseEvent -> {
             int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
             int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
@@ -36,7 +35,7 @@ public class GraphController {
         });
     }
 
-    public void initialize_click(){
+    public void initialize_click() {
         canvas.setOnMouseClicked(mouseEvent -> {
             int x = (int) (mouseEvent.getX() * graph.width / canvas.getWidth());
             int y = (int) (mouseEvent.getY() * graph.height / canvas.getHeight());
@@ -45,26 +44,26 @@ public class GraphController {
         });
     }
 
-    private void try_selecting_vertex(int x, int y) {
-        int index = y * graph.width + x;
+    private void try_selecting_vertex(int pos_x, int pos_y) {
+        int index = pos_y * graph.width + pos_x;
         VertexController vertex = vertices.get(index);
 
-        if (graph.start_index == -1 && !vertex.isSelected()) {
+        if (graph.start_index == -1 && !vertex.is_selected()) {
             graph.start_index = index;
-            vertex.draw_selected();
+            vertex.draw_as_selected();
         } else if (
                 graph.target_index == -1 &&
-                        !vertex.isSelected() &&
+                        !vertex.is_selected() &&
                         bfs.run_bfs(graph, graph.start_index, index) != 2
         ) {
             graph.target_index = index;
-            vertex.draw_selected();
-            solveGraph();
+            vertex.draw_as_selected();
+            find_path_between_selected_vertexes();
             issolved = true;
         }
     }
 
-    public void solveGraph() {
+    public void find_path_between_selected_vertexes() {
         if (graph.start_index == -1 || graph.target_index == -1) {
             return;
         }
@@ -78,35 +77,35 @@ public class GraphController {
             if (edge == null) {
                 edge = edges.get(utils.get_edge_index(previous_vertex_index, vertex_index));
             }
-            edge.draw_selected();
-            vertices.get(vertex_index).draw_selected();
+            edge.draw_as_selected();
+            vertices.get(vertex_index).draw_as_selected();
             vertex_index = previous_vertex_index;
         }
     }
 
-    public void clear_graph() {
+    public void clear_selections_from_graph() {
         graph.start_index = -1;
         graph.target_index = -1;
         graph.total_weight = 0;
         issolved = false;
         for (EdgeController edge : edges.values()) {
-            edge.draw_deselected();
+            edge.draw_as_deselected();
         }
         for (VertexController vertex : vertices) {
-            vertex.draw_deselected();
+            vertex.draw_as_deselected();
         }
     }
 
-    public void generateGraph(int h, int w, int n) {
+    public void generate_graph(int height, int width, int parts) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         canvas.setWidth(600);
         canvas.setHeight(600);
-        graph.width = w;
-        graph.height = h;
-        graph.generate_graph(w, h);
-        if (bfs.run_bfs(graph, 0, w * h - 1) != 2)
-            gd.divide_graph(graph, n);
-        drawGraph();
+        graph.width = width;
+        graph.height = height;
+        graph.generate_graph(width, height);
+        if (bfs.run_bfs(graph, 0, width * height - 1) != 2)
+            gd.divide_graph(graph, parts);
+        draw_graph();
     }
 
     public void initialize_graph() {
@@ -116,25 +115,24 @@ public class GraphController {
         gc = canvas.getGraphicsContext2D();
     }
 
-    public int readFromFile(String file_path) {
+    public int read_graph_from_file(String file_path) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         canvas.setWidth(600);
         canvas.setHeight(600);
-        int isread = graph.read_from_file(file_path);
+        int isread = graph.read_graph_from_file(file_path);
         if (isread == 0) {
-            drawGraph();
+            draw_graph();
             return 0;
-        }
-        else {
+        } else {
             return 1;
         }
     }
 
-    public void saveToFile(String file_path) {
-        graph.save_to_file(file_path);
+    public void save_graph_to_file(String file_path) {
+        graph.save_graph_to_file(file_path);
     }
 
-    private void drawGraph() {
+    private void draw_graph() {
         double x = canvas.getWidth() / graph.width;
         double y = canvas.getHeight() / graph.height;
 
@@ -143,20 +141,20 @@ public class GraphController {
         if (length < 20) {
             canvas.setWidth(graph.width * 30);
             canvas.setHeight(graph.height * 30);
-            drawGraph();
+            draw_graph();
             return;
         }
         if (length > 100) {
             canvas.setWidth(graph.width * 100);
             canvas.setHeight(graph.height * 100);
-            drawGraph();
+            draw_graph();
             return;
         }
-        drawEdges(x, y, length);
-        drawVertices(x, y, length);
+        draw_graph_edges(x, y, length);
+        draw_graph_vertices(x, y, length);
     }
 
-    private void drawEdges(double x, double y, double length) {
+    private void draw_graph_edges(double pos_x, double pos_y, double length) {
         for (int first_vertex_index = 0; first_vertex_index < graph.get_vertices_number(); first_vertex_index++) {
             for (int second_vertex_index = 0; second_vertex_index < graph.get_vertices_number(); second_vertex_index++) {
                 if (
@@ -164,43 +162,43 @@ public class GraphController {
                                 graph.get_edge_weight(first_vertex_index, second_vertex_index) != utils.NO_CONNECTION &&
                                 edges.get(utils.get_edge_index(second_vertex_index, first_vertex_index)) == null
                 ) {
-                    drawEdge(first_vertex_index, second_vertex_index, x, y, length);
+                    draw_graph_edge(first_vertex_index, second_vertex_index, pos_x, pos_y, length);
                 }
             }
         }
     }
 
-    private void drawEdge(int first_vertex_index, int second_vertex_index, double x, double y, double length) {
+    private void draw_graph_edge(int first_vertex_index, int second_vertex_index, double pos_x, double pos_y, double length) {
         String edge_index = utils.get_edge_index(first_vertex_index, second_vertex_index);
 
         EdgeController edgeController = new EdgeController(gc, graph.get_edge_weight(first_vertex_index, second_vertex_index), new Edge(
                 edge_index,
-                (first_vertex_index % graph.width) * x + (x / 2),
-                (first_vertex_index / graph.width) * y + (y / 2),
-                (second_vertex_index % graph.width) * x + (x / 2),
-                (second_vertex_index / graph.width) * y + (y / 2),
+                (first_vertex_index % graph.width) * pos_x + (pos_x / 2),
+                (first_vertex_index / graph.width) * pos_y + (pos_y / 2),
+                (second_vertex_index % graph.width) * pos_x + (pos_x / 2),
+                (second_vertex_index / graph.width) * pos_y + (pos_y / 2),
                 length
         ));
 
         edges.put(edge_index, edgeController);
-        edgeController.draw_deselected();
+        edgeController.draw_as_deselected();
     }
 
-    private void drawVertices(double x, double y, double length) {
+    private void draw_graph_vertices(double pos_x, double pos_y, double side_length) {
         VertexController vertexController;
 
         for (int index = 0; index < graph.get_vertices_number(); index++) {
             vertexController = new VertexController(gc, new Vertex(
                     index,
-                    (index % graph.width) * x + (x - length) / 2,
-                    (index / graph.width) * y + (y - length) / 2,
-                    length * 4 / 5));
+                    (index % graph.width) * pos_x + (pos_x - side_length) / 2,
+                    (index / graph.width) * pos_y + (pos_y - side_length) / 2,
+                    side_length * 4 / 5));
             vertices.add(vertexController);
-            vertexController.draw_deselected();
+            vertexController.draw_as_deselected();
         }
     }
 
-    public double get_total_weight() {
+    public double get_total_weight_of_found_path() {
         return graph.total_weight;
     }
 }

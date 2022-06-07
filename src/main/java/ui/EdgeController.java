@@ -14,15 +14,15 @@ public class EdgeController {
         this.default_color = Color.rgb((int) (255 * weight), 0, (int) (255 * (1 - weight)));
     }
 
-    public void draw_selected() {
+    public void draw_as_selected() {
         gc.setLineWidth(edge.length() / 3);
         gc.setStroke(Color.WHITE);
-        gc.strokeLine(edge.start_x(), edge.start_y(), edge.end_x(), edge.end_y());
+        gc.strokeLine(edge.start_pos_x(), edge.start_pos_y(), edge.end_pos_x(), edge.end_pos_y());
     }
 
-    public void draw_deselected() {
+    public void draw_as_deselected() {
         gc.setLineWidth(edge.length() / 3);
         gc.setStroke(default_color);
-        gc.strokeLine(edge.start_x(), edge.start_y(), edge.end_x(), edge.end_y());
+        gc.strokeLine(edge.start_pos_x(), edge.start_pos_y(), edge.end_pos_x(), edge.end_pos_y());
     }
 }

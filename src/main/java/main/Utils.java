@@ -11,8 +11,8 @@ public class Utils {
     public final int MAX_VERTEX_NUMBER = 25000;
 
 
-    public void raise_error(int code) {
-        String error_message = switch (code) {
+    public void raise_error(int error_code) {
+        String error_message = switch (error_code) {
             case INVALID_ARGUMENTS:
                 yield "Invalid execution arguments";
             case COULD_NOT_LOAD_FROM_FILE:
@@ -29,7 +29,7 @@ public class Utils {
                 yield "Unknown error occurred";
         };
         System.out.println(error_message);
-        System.exit(code);
+        System.exit(error_code);
     }
 
     public String get_edge_index(int vertex_index, int connected_vertex_index) {

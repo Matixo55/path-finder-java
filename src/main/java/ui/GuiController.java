@@ -1,20 +1,9 @@
 package ui;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import main.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GuiController {
 
@@ -27,8 +16,9 @@ public class GuiController {
             return false; //String is not an Integer
         }
     }
-    private static boolean checkInitialConditions(int x, int y, int n){
-        if(x * y > 10000 || x <= 0 || y <= 0 || n < 1 || n > (x * y)/2){
+
+    private static boolean checkInitialConditions(int x, int y, int n) {
+        if (x * y > 10000 || x <= 0 || y <= 0 || n < 1 || n > (x * y) / 2) {
             return true; // Warunki nie sa spelnione
         }
         return false;
@@ -56,31 +46,31 @@ public class GuiController {
     private GraphController graphController;
 
     @FXML
-    private void initial(){
-       graphController.initialize_click();
-       if (graphController.issolved) {
-          String weight = Double.toString(graphController.get_total_weight());
-          total_weight.setText(weight);
-       }
+    private void initial() {
+        graphController.initialize_click();
+        if (graphController.issolved) {
+            String weight = Double.toString(graphController.get_total_weight_of_found_path());
+            total_weight.setText(weight);
+        }
 
 
     }
+
     @FXML
-    protected void onGenerateButtonClick(){
+    protected void onGenerateButtonClick() {
         String gWidth = width.getText();
         String gHeight = height.getText();
         String gParts = parts.getText();
-        if(isNumeric(gWidth) && isNumeric(gHeight) && isNumeric(gParts)) {
+        if (isNumeric(gWidth) && isNumeric(gHeight) && isNumeric(gParts)) {
             int Width = Integer.parseInt(gWidth);
             int Height = Integer.parseInt(gHeight);
             int Parts = Integer.parseInt(gParts);
-            if(!checkInitialConditions(Width, Height, Parts)){
+            if (!checkInitialConditions(Width, Height, Parts)) {
                 welcomeText.setText("Generuję graf");
                 isGenerated = true;
                 total_weight.setText("0.0");
                 graphController.initialize_graph();
-                graphController.generateGraph(Height, Width, Parts);
-
+                graphController.generate_graph(Height, Width, Parts);
             } else {
                 welcomeText.setText("Podano bledne dane!");
             }
@@ -88,18 +78,20 @@ public class GuiController {
             welcomeText.setText("Podano bledne dane!");
         }
     }
+
     @FXML
     protected void onClearButtonClick() {
         welcomeText.setText("Wyczyszczono");
-        graphController.clear_graph();
+        graphController.clear_selections_from_graph();
         total_weight.setText("0.0");
     }
+
     @FXML
     protected void onOpenButtonClick() {
         String openPath = gOpen.getText();
         int isopened;
         graphController.initialize_graph();
-        isopened = graphController.readFromFile(openPath);
+        isopened = graphController.read_graph_from_file(openPath);
         if (isopened == 0) {
             isGenerated = true;
             welcomeText.setText("Otwarto graf");
@@ -107,15 +99,15 @@ public class GuiController {
         } else {
             welcomeText.setText("Wystapil blad, podaj poprawna sciezke do pliku");
         }
-
     }
+
     @FXML
     protected void onSaveButtonClick() {
-        if(!isGenerated){
+        if (!isGenerated) {
             welcomeText.setText("Najpierw wygeneruj graf");
         } else {
             String savePath = gSave.getText();
-            graphController.saveToFile(savePath);
+            graphController.save_graph_to_file(savePath);
             welcomeText.setText("Zapisany");
         }
     }
