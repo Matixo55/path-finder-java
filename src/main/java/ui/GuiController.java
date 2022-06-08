@@ -44,13 +44,14 @@ public class GuiController {
             int Height = Integer.parseInt(gHeight);
             int Parts = Integer.parseInt(gParts);
 
-            assert are_parameters_valid(Width, Height, Parts) == true;
+            if (!are_parameters_valid(Width, Height, Parts))
+                throw new IllegalArgumentException();
 
             info_text.setText("Generuję graf");
             graphController.generate_graph(Height, Width, Parts);
             total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
 
-        } catch (NumberFormatException | AssertionError e) {
+        } catch (IllegalArgumentException e) {
             info_text.setText("Podano bledne dane!");
         }
     }
