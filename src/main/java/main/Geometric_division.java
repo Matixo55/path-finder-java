@@ -283,7 +283,7 @@ public class Geometric_division {
         }
     }
 
-    public void divide_graph(Graph graph, int parts) {
+    public int divide_graph(Graph graph, int parts) {
         int start, attempts, range, is_line, max_attempts;
         int resign = 0;
 
@@ -343,9 +343,10 @@ public class Geometric_division {
                 }
             }
             if (resign == 1) {
-                System.out.println("Niestety, nie udalo sie w pelni podzielic grafu. Program wykonal " + attempts + " prob\n");
-                break;
+                //System.out.println("Niestety, nie udalo sie w pelni podzielic grafu. Program wykonal " + attempts + " prob\n");
+                return 1;
             }
         }
+        return 0;
     }
 }

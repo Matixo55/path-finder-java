@@ -81,14 +81,19 @@ public class GraphController {
         }
     }
 
-    public void generate_graph(int height, int width, int parts) {
+    public int generate_graph(int height, int width, int parts) {
         reset_or_initialize_graph();
         graph.width = width;
         graph.height = height;
         graph.generate_graph(width, height);
-        if (bfs.run_bfs(graph, 0, width * height - 1) != 2)
-            gd.divide_graph(graph, parts);
+        int is_divided = 1;
+        if (bfs.run_bfs(graph, 0, width * height - 1) != 2) {
+            if (gd.divide_graph(graph, parts) == 0) {
+                is_divided = 0;
+            }
+        }
         draw_graph();
+        return is_divided;
     }
 
     public void reset_or_initialize_graph() {

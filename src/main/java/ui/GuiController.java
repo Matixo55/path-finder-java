@@ -47,9 +47,14 @@ public class GuiController {
             if (!are_parameters_valid(Width, Height, Parts))
                 throw new IllegalArgumentException();
 
-            info_text.setText("Generuję graf");
-            graphController.generate_graph(Height, Width, Parts);
-            total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
+            if (graphController.generate_graph(Height, Width, Parts)==0){
+                info_text.setText("Generuję graf");
+                total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
+            } else {
+                info_text.setText("Niestety, nie udalo sie w pelni podzielic grafu.");
+                total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
+            }
+
 
         } catch (IllegalArgumentException e) {
             info_text.setText("Podano bledne dane!");
