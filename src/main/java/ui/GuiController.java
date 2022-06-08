@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import main.Utils;
 
 public class GuiController {
     @FXML
@@ -24,13 +25,14 @@ public class GuiController {
     private ScrollPane graph_pane;
     @FXML
     private GraphController graphController;
+    private Utils utils = new Utils();
 
     public void update_total_weight() {
         total_weight.setText(graphController.get_string_with_total_weight_of_found_path());
     }
 
-    private static boolean are_parameters_valid(int x, int y, int n) {
-        return (x * y <= 10000 && x > 0 && y > 0 && n >= 1 && n <= (x * y) / 2);
+    private boolean are_parameters_valid(int x, int y, int n) {
+        return (x * y <= utils.MAX_VERTEX_NUMBER && x > 0 && y > 0 && n >= 1 && n <= (x * y) / 2);
     }
 
     @FXML
