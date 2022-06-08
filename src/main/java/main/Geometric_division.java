@@ -32,7 +32,7 @@ public class Geometric_division {
         return edge_counter;
     }
 
-    int is_corner(Graph graph, int vertex) // je�li wierzcho�ek jest na rogu, funkcja zwraca 1, je�li wewn�trz linii, funkcja zwraca 0
+    private int is_corner(Graph graph, int vertex) // je�li wierzcho�ek jest na rogu, funkcja zwraca 1, je�li wewn�trz linii, funkcja zwraca 0
     {
         if (vertex == 0 || vertex == graph.width - 1 || vertex == graph.height * graph.width - graph.width - 1 || vertex == graph.height * graph.width - 1) {
             return 1;
@@ -60,7 +60,7 @@ public class Geometric_division {
         }
     }
 
-    int which_row(Graph graph, int vertex) {
+    private int which_row(Graph graph, int vertex) {
         for (int i = 1; i <= graph.height; i++) {
             if (vertex < graph.width * i) {
                 return i - 1;
@@ -69,7 +69,7 @@ public class Geometric_division {
         return 10;
     }
 
-    void divide(Graph graph, int start, int is_line) {
+    private void divide(Graph graph, int start, int is_line) {
         if (is_line == 1) {
             if (start < graph.width) {
                 if (graph.edges[start][start + 1] != utils.NO_CONNECTION) {

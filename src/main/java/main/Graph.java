@@ -70,7 +70,7 @@ public class Graph {
         }
     }
 
-    public void save_graph_to_file(String file_path) {
+    public int save_graph_to_file(String file_path) {
         PrintWriter writer = null;
 
         try {
@@ -88,13 +88,16 @@ public class Graph {
             writer.close();
 
         } catch (FileNotFoundException ex) {
-            utils.raise_error(utils.COULD_NOT_SAVE_TO_FILE);
+            //utils.raise_error(utils.COULD_NOT_SAVE_TO_FILE);
+            return 1;
         } catch (Exception ex) {
-            utils.raise_error(-1);
+            //utils.raise_error(-1);
+            return 1;
         }
+        return 0;
     }
 
-    private void read_graph_dimensions(String first_line) {
+    private int read_graph_dimensions(String first_line) {
         try {
             assert first_line != null;
 
@@ -105,9 +108,11 @@ public class Graph {
             assert height >= 1 && width >= 1;
 
         } catch (IndexOutOfBoundsException | AssertionError | NumberFormatException ex) {
-            utils.raise_error(utils.GRAPH_DATA_INVALID);
+            //utils.raise_error(utils.GRAPH_DATA_INVALID);
+            return 1;
         } catch (Exception ex) {
-            utils.raise_error(-1);
+            //utils.raise_error(-1);
+            return 1;
         }
 
         int number_of_vertexes = height * width;
@@ -120,6 +125,7 @@ public class Graph {
         }
 
         fill_graph_edge_weights();
+        return 0;
     }
 
     public int read_graph_from_file(String file_path) {
@@ -129,7 +135,9 @@ public class Graph {
             String line = br.readLine();
             String[] data;
 
-            read_graph_dimensions(line);
+            if (read_graph_dimensions(line) == 1){
+                return 1;
+            }
 
             while ((line = br.readLine()) != null) {
                 data = line.split("\t");
@@ -155,7 +163,8 @@ public class Graph {
             }
 
         } catch (AssertionError | ArrayIndexOutOfBoundsException | NumberFormatException ex) {
-            utils.raise_error(utils.GRAPH_DATA_INVALID);
+            //utils.raise_error(utils.GRAPH_DATA_INVALID);
+            return 1;
         } catch (Exception e) {
             //utils.raise_error(-1);
             return 1;

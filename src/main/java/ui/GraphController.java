@@ -12,7 +12,7 @@ import static java.lang.Thread.sleep;
 
 public class GraphController {
     @FXML
-    Canvas canvas;
+    public Canvas canvas;
     private GraphicsContext gc;
     private Bfs bfs = new Bfs();
     private Graph graph;
@@ -108,11 +108,11 @@ public class GraphController {
         return graph.read_graph_from_file(file_path);
     }
 
-    public void save_graph_to_file(String file_path) {
-        graph.save_graph_to_file(file_path);
+    public int save_graph_to_file(String file_path) {
+        return graph.save_graph_to_file(file_path);
     }
 
-    void draw_graph() {
+    public void draw_graph() {
         double x = canvas.getWidth() / graph.width;
         double y = canvas.getHeight() / graph.height;
 

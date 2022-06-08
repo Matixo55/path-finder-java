@@ -82,8 +82,12 @@ public class GuiController {
             info_text.setText("Najpierw wygeneruj graf");
         } else {
             String savePath = gSave.getText();
-            update_total_weight();
-            info_text.setText("Zapisany");
+            if (graphController.save_graph_to_file(savePath) == 0) {
+                update_total_weight();
+                info_text.setText("Zapisany");
+            } else {
+                info_text.setText("Wystapil blad, podaj poprawna sciezke do pliku");
+            }
         }
     }
 
