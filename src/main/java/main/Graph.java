@@ -86,14 +86,10 @@ public class Graph {
                 writer.print("\n");
             }
             writer.close();
-
-        } catch (FileNotFoundException ex) {
-            //utils.raise_error(utils.COULD_NOT_SAVE_TO_FILE);
-            return 1;
         } catch (Exception ex) {
-            //utils.raise_error(-1);
             return 1;
         }
+
         return 0;
     }
 
@@ -107,23 +103,15 @@ public class Graph {
 
             assert height >= 1 && width >= 1;
 
-        } catch (IndexOutOfBoundsException | AssertionError | NumberFormatException ex) {
-            //utils.raise_error(utils.GRAPH_DATA_INVALID);
-            return 1;
-        } catch (Exception ex) {
-            //utils.raise_error(-1);
+        } catch (Exception | AssertionError ex) {
             return 1;
         }
 
         int number_of_vertexes = height * width;
 
-        if (number_of_vertexes >= utils.MAX_VERTEX_NUMBER) {
-            utils.raise_error(utils.GRAPH_TOO_BIG);
+        if (number_of_vertexes >= utils.MAX_VERTEX_NUMBER || start_index >= number_of_vertexes || target_index >= number_of_vertexes) {
+            return 1;
         }
-        if (start_index >= number_of_vertexes || target_index >= number_of_vertexes) {
-            utils.raise_error(utils.VERTEX_INDEX_INVALID);
-        }
-
         fill_graph_edge_weights();
         return 0;
     }
@@ -135,7 +123,7 @@ public class Graph {
             String line = br.readLine();
             String[] data;
 
-            if (read_graph_dimensions(line) == 1){
+            if (read_graph_dimensions(line) == 1) {
                 return 1;
             }
 
@@ -162,13 +150,10 @@ public class Graph {
                 index++;
             }
 
-        } catch (AssertionError | ArrayIndexOutOfBoundsException | NumberFormatException ex) {
-            //utils.raise_error(utils.GRAPH_DATA_INVALID);
-            return 1;
-        } catch (Exception e) {
-            //utils.raise_error(-1);
+        } catch (AssertionError | Exception ex) {
             return 1;
         }
+
         return 0;
     }
 

@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class VertexController {
     private final Vertex vertex;
-    public boolean selected = false;
+    private boolean selected = false;
     private GraphicsContext gc;
 
     public VertexController(GraphicsContext gc, Vertex vertex) {
